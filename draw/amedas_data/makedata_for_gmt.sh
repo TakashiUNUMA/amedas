@@ -5,8 +5,15 @@ infiles=$*
 # path to data directory
 DDIR=../../data
 
+# day
+DDAY="2014/01/01"
+
 # time
 DTIME="00:30"
+
+# outfile
+OUTFILE="test.dat"
+
 
 #
 # format:
@@ -20,5 +27,7 @@ DTIME="00:30"
 #  $7: wind speed [m/s]
 #  $8: wind direction [dgree] (from north)
 #
-awk -F, '$4=="'${DTIME}'" {print $1,$2,$5,$6,$7,$8}' ${DDIR}/??/*/*.csv
 
+awk -F, '$3=="'${DDAY}'" && $4=="'${DTIME}'" && NF==11 {print $1,$2,$5,$6,$7,$8}' ${DDIR}/??/*/*.csv > ${OUTFILE}
+awk -F, '$3=="'${DDAY}'" && $4=="'${DTIME}'" && NF==13 {print $1,$2,$7,$8,$10,$11}' ${DDIR}/??/*/*.csv >> ${OUTFILE}
+awk -F, '$3=="'${DDAY}'" && $4=="'${DTIME}'" && NF==14 {print $1,$2,$7,$8,$10,$11}' ${DDIR}/??/*/*.csv >> ${OUTFILE}

@@ -79,9 +79,9 @@ set M = `awk 'BEGIN{t='${T}';print strftime("%m",t)}'`
 set D = `awk 'BEGIN{t='${T}';print strftime("%d",t)}'`
 
 if ( `echo ${SITE[${I}]} | awk '{print length($1)}'` == 4 ) then
-    ${W3M} "http://www.data.jma.go.jp/obd/stats/etrn/view/10min_a1.php?prec_no=${AREA[${I}]}&block_no=${SITE[${I}]}&year=${Y}&month=${M}&day=${D}&elm=minutes&view=" | tail -n 149 | head -n 144 | sed -f winddir0.sed | sed -f winddir1.sed | sed -f winddir2.sed | awk '{t='${T}';print '${SLON[${I}]}'","'${SLAT[${I}]}'","strftime("%Y/%m/%d,",t)$0}' >> ${FILE}
+    ${W3M} "http://www.data.jma.go.jp/obd/stats/etrn/view/10min_a1.php?prec_no=${AREA[${I}]}&block_no=${SITE[${I}]}&year=${Y}&month=${M}&day=${D}&elm=minutes&view=" | tail -n 149 | head -n 144 | sed -f winddir0.sed | sed -f winddir1.sed | sed -f winddir2.sed | awk '{t='${T}';print '${SLON[${I}]}'","'${SLAT[${I}]}'","strftime("%Y/%m/%d,",t)$0}' | sed -e s/-/0.0/g >> ${FILE}
 else
-    ${W3M} "http://www.data.jma.go.jp/obd/stats/etrn/view/10min_s1.php?prec_no=${AREA[${I}]}&block_no=${SITE[${I}]}&year=${Y}&month=${M}&day=${D}&elm=minutes&view=" | tail -n 150 | head -n 144 | sed -f winddir0.sed | sed -f winddir1.sed | sed -f winddir2.sed | awk '{t='${T}';print '${SLON[${I}]}'","'${SLAT[${I}]}'","strftime("%Y/%m/%d,",t)$0}' >> ${FILE}
+    ${W3M} "http://www.data.jma.go.jp/obd/stats/etrn/view/10min_s1.php?prec_no=${AREA[${I}]}&block_no=${SITE[${I}]}&year=${Y}&month=${M}&day=${D}&elm=minutes&view=" | tail -n 150 | head -n 144 | sed -f winddir0.sed | sed -f winddir1.sed | sed -f winddir2.sed | awk '{t='${T}';print '${SLON[${I}]}'","'${SLAT[${I}]}'","strftime("%Y/%m/%d,",t)$0}' | sed -e s/-/0.0/g >> ${FILE}
 endif
 
 @ I ++
