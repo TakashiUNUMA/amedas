@@ -30,8 +30,8 @@ set LIST = ${PREFIX}/station_list_rtw.txt
 
 cat > winddir0.sed << EOF
 s/[[:space:]]\+/,/g
-s/\/\/\//-999./g
-s/静穏/-999./g
+s/\/\/\//999./g
+s/静穏/999./g
 s/北北東/22.5/g
 s/東北東/67.5/g
 s/東南東/112.5/g
