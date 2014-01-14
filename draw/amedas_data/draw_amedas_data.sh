@@ -54,7 +54,7 @@ makecpt -Cseis -T${VMIN}/${VMAX}/${VINT} -I | sed -e "s/F\t0\t0\t0/F\t255\t0\t0/
 psbasemap -J${PRJ} -R${RANGE} -B${XYINT}:"":/${XYINT}:"":SWne:."AMeDAS Data": -X4.0 -Y3.0 ${gmtsta} > ${psfile}
 
 # psxy for wind vector
-awk '$6!="-999."{print $1,$2,$6,$5}' ${infile} | psxy -J -R -SV0.005/0.2/0.1n0.2 -G0,0,0 ${gmtcon} >> ${psfile}
+awk '$6!="999."{print $1,$2,$6,$5}' ${infile} | psxy -J -R -SV0.005/0.2/0.1n0.2 -G0,0,0 ${gmtcon} >> ${psfile}
 
 # psxy for rainfall
 awk '{print $1,$2,$3}' ${infile} | psxy -J -R -Ccpalet.cpt -Sc0.15 ${gmtcon} >> ${psfile}
