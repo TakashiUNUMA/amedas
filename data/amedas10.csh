@@ -16,6 +16,7 @@ set PREFIX = .
 setenv http_proxy http://proxy.kuins.net:8080
 
 #---+->--wget
+set WGET = /usr/bin/wget
 set W3M = /usr/bin/w3m
 
 #---+->--option
@@ -78,20 +79,28 @@ set Y = `awk 'BEGIN{t='${T}';print strftime("%Y",t)}'`
 set M = `awk 'BEGIN{t='${T}';print strftime("%m",t)}'`
 set D = `awk 'BEGIN{t='${T}';print strftime("%d",t)}'`
 
+echo ${FILE}
+
 if (`echo ${SITE[${I}]} | awk '{print length($1)}'` == 5) then
-${W3M} "http://www.data.jma.go.jp/obd/stats/etrn/view/10min_s1.php?prec_no=${AREA[${I}]}&block_no=${SITE[${I}]}&year=${Y}&month=${M}&day=${D}&elm=minutes&view=" | tail -n 149 | head -n 144 | sed -f winddir0.sed | sed -f winddir1.sed | sed -f winddir2.sed | awk '{t='${T}';print '${SLON[${I}]}'","'${SLAT[${I}]}'","strftime("%Y/%m/%d,",t)$0}' | sed -e s/-/0.0/g >> ${FILE}
+    ${WGET} -q -O foo.html "http://www.data.jma.go.jp/obd/stats/etrn/view/10min_s1.php?prec_no=${AREA[${I}]}&block_no=${SITE[${I}]}&year=${Y}&month=${M}&day=${D}&elm=minutes&view=" # modified: 20141118 by Takashi Unuma
+    ${W3M} foo.html | tail -n 149 | head -n 144 | sed -f winddir0.sed | sed -f winddir1.sed | sed -f winddir2.sed | awk '{t='${T}';print '${SLON[${I}]}'","'${SLAT[${I}]}'","strftime("%Y/%m/%d,",t)$0}' | sed -e s/-/0.0/g >> ${FILE} # modified: 20141118 by Takashi Unuma
 else if ( `echo ${SITE[${I}]} | awk '{print length($1)}'` == 4 ) then
-    ${W3M} "http://www.data.jma.go.jp/obd/stats/etrn/view/10min_a1.php?prec_no=${AREA[${I}]}&block_no=${SITE[${I}]}&year=${Y}&month=${M}&day=${D}&elm=minutes&view=" | tail -n 149 | head -n 144 | sed -f winddir0.sed | sed -f winddir1.sed | sed -f winddir2.sed | awk '{t='${T}';print '${SLON[${I}]}'","'${SLAT[${I}]}'","strftime("%Y/%m/%d,",t)$0}' | sed -e s/-/0.0/g >> ${FILE}
+    ${WGET} -q -O foo.html "http://www.data.jma.go.jp/obd/stats/etrn/view/10min_a1.php?prec_no=${AREA[${I}]}&block_no=${SITE[${I}]}&year=${Y}&month=${M}&day=${D}&elm=minutes&view=" # modified: 20141118 by Takashi Unuma
+    ${W3M} foo.html | tail -n 149 | head -n 144 | sed -f winddir0.sed | sed -f winddir1.sed | sed -f winddir2.sed | awk '{t='${T}';print '${SLON[${I}]}'","'${SLAT[${I}]}'","strftime("%Y/%m/%d,",t)$0}' | sed -e s/-/0.0/g >> ${FILE} # modified: 20141118 by Takashi Unuma
 else if (`echo ${SITE[${I}]} | awk '{print length($1)}'` == 3) then 
-    ${W3M} "http://www.data.jma.go.jp/obd/stats/etrn/view/10min_a1.php?prec_no=${AREA[${I}]}&block_no=0${SITE[${I}]}&year=${Y}&month=${M}&day=${D}&elm=minutes&view=" | tail -n 150 | head -n 144 | sed -f winddir0.sed | sed -f winddir1.sed | sed -f winddir2.sed | awk '{t='${T}';print '${SLON[${I}]}'","'${SLAT[${I}]}'","strftime("%Y/%m/%d,",t)$0}' | sed -e s/-/0.0/g >> ${FILE}
+    ${WGET} -q -O foo.html "http://www.data.jma.go.jp/obd/stats/etrn/view/10min_a1.php?prec_no=${AREA[${I}]}&block_no=0${SITE[${I}]}&year=${Y}&month=${M}&day=${D}&elm=minutes&view=" # modified: 20141118 by Takashi Unuma
+    ${W3M} foo.html | tail -n 150 | head -n 144 | sed -f winddir0.sed | sed -f winddir1.sed | sed -f winddir2.sed | awk '{t='${T}';print '${SLON[${I}]}'","'${SLAT[${I}]}'","strftime("%Y/%m/%d,",t)$0}' | sed -e s/-/0.0/g >> ${FILE} # modified: 20141118 by Takashi Unuma
 else if (`echo ${SITE[${I}]} | awk '{print length($1)}'` == 2) then 
-    ${W3M} "http://www.data.jma.go.jp/obd/stats/etrn/view/10min_a1.php?prec_no=${AREA[${I}]}&block_no=00${SITE[${I}]}&year=${Y}&month=${M}&day=${D}&elm=minutes&view=" | tail -n 150 | head -n 144 | sed -f winddir0.sed | sed -f winddir1.sed | sed -f winddir2.sed | awk '{t='${T}';print '${SLON[${I}]}'","'${SLAT[${I}]}'","strftime("%Y/%m/%d,",t)$0}' | sed -e s/-/0.0/g >> ${FILE}
+    ${WGET} -q -O foo.html "http://www.data.jma.go.jp/obd/stats/etrn/view/10min_a1.php?prec_no=${AREA[${I}]}&block_no=00${SITE[${I}]}&year=${Y}&month=${M}&day=${D}&elm=minutes&view=" # modified: 20141118 by Takashi Unuma
+    ${W3M} foo.html | tail -n 150 | head -n 144 | sed -f winddir0.sed | sed -f winddir1.sed | sed -f winddir2.sed | awk '{t='${T}';print '${SLON[${I}]}'","'${SLAT[${I}]}'","strftime("%Y/%m/%d,",t)$0}' | sed -e s/-/0.0/g >> ${FILE} # modified: 20141118 by Takashi Unuma
 else if (`echo ${SITE[${I}]} | awk '{print length($1)}'` == 1) then 
-    ${W3M} "http://www.data.jma.go.jp/obd/stats/etrn/view/10min_a1.php?prec_no=${AREA[${I}]}&block_no=000${SITE[${I}]}&year=${Y}&month=${M}&day=${D}&elm=minutes&view=" | tail -n 150 | head -n 144 | sed -f winddir0.sed | sed -f winddir1.sed | sed -f winddir2.sed | awk '{t='${T}';print '${SLON[${I}]}'","'${SLAT[${I}]}'","strftime("%Y/%m/%d,",t)$0}' | sed -e s/-/0.0/g >> ${FILE}
+    ${WGET} -q -O foo.html "http://www.data.jma.go.jp/obd/stats/etrn/view/10min_a1.php?prec_no=${AREA[${I}]}&block_no=000${SITE[${I}]}&year=${Y}&month=${M}&day=${D}&elm=minutes&view=" # modified: 20141118 by Takashi Unuma
+    ${W3M} foo.html | tail -n 150 | head -n 144 | sed -f winddir0.sed | sed -f winddir1.sed | sed -f winddir2.sed | awk '{t='${T}';print '${SLON[${I}]}'","'${SLAT[${I}]}'","strftime("%Y/%m/%d,",t)$0}' | sed -e s/-/0.0/g >> ${FILE} # modified: 20141118 by Takashi Unuma
 endif
 
 @ I ++
 end
 
 rm -f winddir?.sed
+rm -f foo.html
 exit
