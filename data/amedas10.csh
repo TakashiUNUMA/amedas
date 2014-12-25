@@ -5,6 +5,8 @@ if ($#argv == 0) then
     exit -1
 endif
 
+setenv LANG "ja_JP.utf8"
+
 set YYYY = `echo $1 | cut -b 1-4`
 set MM = `echo $1 | cut -b 5-6`
 set DD = `echo $1 | cut -b 7-8`
