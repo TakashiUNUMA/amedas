@@ -6,7 +6,7 @@ infiles=$*
 DDIR=../../data
 
 # day
-DDAY="2014/01/01"
+DDAY="2012/08/14"
 
 # time
 DTIME="00:30"

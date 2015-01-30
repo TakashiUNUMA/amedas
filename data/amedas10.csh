@@ -22,7 +22,7 @@ set W3M = /usr/bin/w3m
 # r: rainfall
 # t: temperature
 # w: wind speed/direction
-set LIST = ${PREFIX}/station_list_rtw.txt
+set LIST = ${PREFIX}/station_list_rtw_mod.txt
 #set LIST = ${PREFIX}/station_list_r.txt
 
 
